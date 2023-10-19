@@ -9,7 +9,6 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
-  Button,
   DropdownMenu,
   DropdownItem,
   Avatar,
@@ -18,14 +17,21 @@ import {
   Input,
 } from "@nextui-org/react";
 import { SearchIcon } from "./searchicon";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const menuItems = ["Dashboard", "Activity", "Profile", "Settings"];
+  const router = usePathname();
+  const menuItems = ["Dashboard", "Settings"];
 
   return (
-    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} maxWidth="xl">
+    <Navbar
+      isBordered
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+      maxWidth="xl"
+    >
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -44,13 +50,21 @@ export default function Header() {
         <p className="font-bold text-inherit">ACME</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem isActive>
-          <Link href="/" aria-current="page">
+        <NavbarItem>
+          <Link
+            href="/"
+            className={router === "/" ? "text-purple-500" : "text-default-500"}
+          >
             Dashboard
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="/settings" color="foreground">
+          <Link
+            href="/settings"
+            className={
+              router === "/settings" ? "text-purple-500" : "text-default-500"
+            }
+          >
             Settings
           </Link>
         </NavbarItem>
@@ -106,7 +120,7 @@ export default function Header() {
                   ? "danger"
                   : "foreground"
               }
-              href="#"
+              href={item === "Settings" ? "/settings" : "/"}
               size="lg"
             >
               {item}

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import {
   Table,
@@ -19,10 +19,8 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 
-import { VerticalDotsIcon } from "./VerticalDotsIcon";
-
 import { ChevronDownIcon } from "./ChevronDownIcon";
-import { columns, users, statusOptions } from "./data";
+import { columns, statusOptions } from "./data";
 import { capitalize } from "./utils";
 import { SearchIcon } from "./searchicon";
 import { EyeIcon } from "./EyeIcon";
@@ -30,13 +28,12 @@ import { DeleteIcon } from "./DeleteIcon";
 
 const statusColorMap = {
   active: "success",
-  paused: "danger",
-  vacation: "warning",
+  blocked: "danger",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["name", "createdat", "status", "actions"];
 
-export default function UserTable() {
+export default function UserTable({ users }) {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -101,24 +98,20 @@ export default function UserTable() {
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
-
+    console.log(user);
     switch (columnKey) {
       case "name":
         return (
-          <User
-            avatarProps={{ radius: "lg", src: user.avatar }}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
+          <User description={"#" + user.telegram_id} name={user.firstName}>
+            {user?.firstName} {user?.lastName}
           </User>
         );
-      case "role":
+      case "createdat":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
             <p className="text-bold text-tiny capitalize text-default-400">
-              {user.team}
+              {new Date(user.createdAt).toDateString()}
             </p>
           </div>
         );
@@ -126,11 +119,11 @@ export default function UserTable() {
         return (
           <Chip
             className="capitalize"
-            color={statusColorMap[user.status]}
+            color={statusColorMap[user.blocked ? "blocked" : "active"]}
             size="sm"
             variant="flat"
           >
-            {cellValue}
+            {user.blocked ? "Blocked" : "Active"}
           </Chip>
         );
       case "actions":
