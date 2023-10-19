@@ -2,8 +2,10 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { updatebotdb } from "../utlis/telebot/updatebotdb";
+import { useRouter } from "next/navigation";
 
-const SettingsComp = ({ botdata }) => {
+const SettingsComp = ({ botdata, admin }) => {
+  const router = useRouter();
   const handleupdate = async (e) => {
     e.preventDefault();
     const middle = e.target;
@@ -27,8 +29,7 @@ const SettingsComp = ({ botdata }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         (async () => {
-            const dbpost = await updatebotdb(obj);
-            console.log(dbpost);
+          const dbpost = await updatebotdb(obj);
           if (dbpost.success) {
             Swal.fire({
               position: "center",
@@ -37,6 +38,7 @@ const SettingsComp = ({ botdata }) => {
               showConfirmButton: false,
               timer: 700,
             });
+            router.refresh();
           } else {
             Swal.fire({
               position: "center",
@@ -59,18 +61,18 @@ const SettingsComp = ({ botdata }) => {
             <div className="items-center sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
               <img
                 className="mb-4 rounded-lg w-28 h-28 sm:mb-0 xl:mb-4 2xl:mb-0"
-                src="https://i.ibb.co/VMk1CZQ/images.jpg"
-                alt="Profile picture"
+                src={admin?.photoURL}
+                alt={admin?.name}
               />
               <div>
                 <p className="mb-1 text-md font-semibold text-gray-500 dark:text-gray-400">
                   Sign in as
                 </p>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Jason Hughes
+                  {admin?.name}
                 </h3>
                 <h5 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  jason@example.com
+                  {admin?.email.replace(/^(.{5}).*@/, "$1****@")}
                 </h5>
               </div>
             </div>
@@ -139,13 +141,15 @@ const SettingsComp = ({ botdata }) => {
                     htmlFor="updatedat"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Last Update Date
+                    Last Updated Date
                   </label>
                   <input
                     type="text"
                     name="updatedat"
                     id="updatedat"
-                    defaultValue={botdata?.data?.updatedAt}
+                    defaultValue={new Date(
+                      botdata?.data?.updatedAt
+                    ).toLocaleString()}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     disabled
                   />

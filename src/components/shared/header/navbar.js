@@ -17,11 +17,13 @@ import {
   Input,
 } from "@nextui-org/react";
 import { SearchIcon } from "./searchicon";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { logout } from "@/components/auth/logout";
 
-export default function Header() {
+export default function Header({ admin }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+  const routerRef = useRouter();
   const router = usePathname();
   const menuItems = ["Dashboard", "Settings"];
 
@@ -91,18 +93,29 @@ export default function Header() {
               as="button"
               className="transition-transform"
               color="secondary"
-              name="Jason Hughes"
+              name={admin?.name}
               size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              src={
+                admin?.photoURL
+                  ? admin?.photoURL
+                  : "https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              }
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+              <p className="font-semibold">{admin?.email}</p>
             </DropdownItem>
             <DropdownItem key="logout" color="danger">
-              Log Out
+              <h1
+                onClick={() => {
+                  logout();
+                  routerRef.refresh();
+                }}
+              >
+                Log Out
+              </h1>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

@@ -25,6 +25,8 @@ import { capitalize } from "./utils";
 import { SearchIcon } from "./searchicon";
 import { EyeIcon } from "./EyeIcon";
 import { DeleteIcon } from "./DeleteIcon";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const statusColorMap = {
   active: "success",
@@ -34,6 +36,57 @@ const statusColorMap = {
 const INITIAL_VISIBLE_COLUMNS = ["name", "createdat", "status", "actions"];
 
 export default function UserTable({ users }) {
+  const router = useRouter();
+
+  const handleblock = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this! Your Bot users would be Deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        (async () => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Bot updated successfully",
+            showConfirmButton: false,
+            timer: 700,
+          });
+          router.refresh();
+        })();
+      }
+    });
+  };
+  const handledelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this! Your Bot users would be Deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        (async () => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Bot updated successfully",
+            showConfirmButton: false,
+            timer: 700,
+          });
+          router.refresh();
+        })();
+      }
+    });
+  };
+
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -48,7 +101,6 @@ export default function UserTable({ users }) {
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
-
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
 
@@ -62,7 +114,7 @@ export default function UserTable({ users }) {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase())
+        user.firstName.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
     if (
@@ -70,7 +122,7 @@ export default function UserTable({ users }) {
       Array.from(statusFilter).length !== statusOptions.length
     ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status)
+        Array.from(statusFilter).includes(user.blocked.toString())
       );
     }
 
@@ -98,7 +150,6 @@ export default function UserTable({ users }) {
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
-    console.log(user);
     switch (columnKey) {
       case "name":
         return (
@@ -130,12 +181,18 @@ export default function UserTable({ users }) {
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Block user">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <span
+                className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                onClick={() => handleblock(user?.telegram_id)}
+              >
                 <EyeIcon />
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+              <span
+                className="text-lg text-danger cursor-pointer active:opacity-50"
+                onClick={() => handledelete(user?.telegram_id)}
+              >
                 <DeleteIcon />
               </span>
             </Tooltip>

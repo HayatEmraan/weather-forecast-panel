@@ -7,9 +7,8 @@ const columns = [
 ];
 
 const statusOptions = [
-  { name: "Active", uid: "active" },
-  { name: "Blocked", uid: "blocked" },
+  { name: "Active", uid: "false" },
+  { name: "Blocked", uid: "true" },
 ];
-
 
 export { columns, statusOptions };

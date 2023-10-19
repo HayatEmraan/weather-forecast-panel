@@ -6,17 +6,17 @@ import {
 import { auth } from "../firebase/fb.config";
 import { savedb } from "../utlis/admin/savedb";
 
-export async function googlelogin() {
+export async function googlelogin(router) {
   const googleProvider = new GoogleAuthProvider();
   await signInWithPopup(auth, googleProvider)
     .then((res) => {
       (async () => {
-        const dbpost = await savedb({
+        await savedb({
           email: res.user.email,
           name: res.user.displayName,
           photoURL: res.user.photoURL,
         });
-        console.log(dbpost);
+        router.push("/");
       })();
     })
     .catch((err) => {
@@ -24,17 +24,17 @@ export async function googlelogin() {
     });
 }
 
-export async function githublogin() {
+export async function githublogin(router) {
   const githubProvider = new GithubAuthProvider();
   await signInWithPopup(auth, githubProvider)
     .then((res) => {
       (async () => {
-        const dbpost = await savedb({
+        await savedb({
           email: res.user.email,
           name: res.user.displayName,
           photoURL: res.user.photoURL,
         });
-        console.log(dbpost);
+        router.push("/");
       })();
     })
     .catch((err) => {
