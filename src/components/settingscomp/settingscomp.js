@@ -20,7 +20,7 @@ const SettingsComp = ({ botdata, admin }) => {
     };
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this! Your Bot users would be Deleted!",
+      text: "You won't be able to revert this! Your Bot users would be deleted!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -72,7 +72,7 @@ const SettingsComp = ({ botdata, admin }) => {
                   {admin?.name}
                 </h3>
                 <h5 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  {admin?.email.replace(/^(.{5}).*@/, "$1****@")}
+                  {admin?.email?.replace(/^(.{5}).*@/, "$1****@")}
                 </h5>
               </div>
             </div>

@@ -3,6 +3,8 @@ import Header from "@/components/shared/header/navbar";
 import { getadmin } from "@/components/utlis/admin/getadmin";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 const WithLayout = async ({ children }) => {
   const admin = await getadmin();
   return (

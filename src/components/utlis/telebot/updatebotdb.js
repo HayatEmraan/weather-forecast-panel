@@ -1,6 +1,8 @@
+"use server";
+
 export async function updatebotdb(bot) {
   try {
-    const fetchapi = await fetch("http://localhost:5000/api/v1/update/bot", {
+    const fetchapi = await fetch("https://api.emraan.me/api/v1/update/bot", {
       method: "PUT",
       credentials: "include",
       headers: {

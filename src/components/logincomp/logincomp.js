@@ -15,9 +15,9 @@ const LoginComp = () => {
               <div className="p-8">
                 <div className="space-y-4">
                   <img
-                    src="https://www.svgrepo.com/show/475643/dribbble-color.svg"
+                    src="/logo/weather.png"
                     loading="lazy"
-                    className="w-10"
+                    className="w-14 rounded-full"
                   />
                   <h2 className="mb-8 text-2xl text-cyan-900 dark:text-white font-bold">
                     Log in to unlock the <br />

@@ -27,6 +27,9 @@ import { EyeIcon } from "./EyeIcon";
 import { DeleteIcon } from "./DeleteIcon";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { blockuserdb } from "../utlis/users/blockuserdb";
+import { unblockdb } from "../utlis/users/unblockdb";
+import { deleteuserdb } from "../utlis/users/deleteuserdb";
 
 const statusColorMap = {
   active: "success",
@@ -41,47 +44,100 @@ export default function UserTable({ users }) {
   const handleblock = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this! Your Bot users would be Deleted!",
+      text: "Your Bot user would be Blocked!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, update it!",
+      confirmButtonText: "Yes, block it!",
     }).then((result) => {
       if (result.isConfirmed) {
         (async () => {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Bot updated successfully",
-            showConfirmButton: false,
-            timer: 700,
-          });
-          router.refresh();
+          const blockdb = await blockuserdb(id);
+          if (blockdb.success) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "User blocked successfully",
+              showConfirmButton: false,
+              timer: 700,
+            });
+            router.refresh();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
+          }
         })();
       }
     });
   };
-  const handledelete = (id) => {
+
+  const handleunblock = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this! Your Bot users would be Deleted!",
+      text: "Your Bot user would be Unblocked!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, update it!",
+      confirmButtonText: "Yes, unblock it!",
     }).then((result) => {
       if (result.isConfirmed) {
         (async () => {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Bot updated successfully",
-            showConfirmButton: false,
-            timer: 700,
-          });
-          router.refresh();
+          const blockdb = await unblockdb(id);
+          if (blockdb.success) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "User unblocked successfully",
+              showConfirmButton: false,
+              timer: 700,
+            });
+            router.refresh();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
+          }
+        })();
+      }
+    });
+  };
+
+  const handledelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this! Your Bot user would be deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        (async () => {
+          const deletedb = await deleteuserdb(id);
+          if (deletedb.success) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "User deleted successfully",
+              showConfirmButton: false,
+              timer: 700,
+            });
+            router.refresh();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
+          }
         })();
       }
     });
@@ -181,12 +237,34 @@ export default function UserTable({ users }) {
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Block user">
-              <span
-                className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                onClick={() => handleblock(user?.telegram_id)}
-              >
-                <EyeIcon />
-              </span>
+              {user.blocked ? (
+                <span
+                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  onClick={() => handleunblock(user?.telegram_id)}
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    version="1.1"
+                    viewBox="0 0 16 16"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M14.78 0.22c-0.293-0.293-0.768-0.293-1.061 0l-3.159 3.159c-0.812-0.246-1.671-0.378-2.561-0.378-3.489 0-6.514 2.032-8 5 0.643 1.283 1.573 2.391 2.703 3.236l-2.484 2.484c-0.293 0.293-0.293 0.768 0 1.061 0.146 0.146 0.338 0.22 0.53 0.22s0.384-0.073 0.53-0.22l13.5-13.5c0.293-0.293 0.293-0.768 0-1.061zM6.5 5c0.66 0 1.22 0.426 1.421 1.019l-1.902 1.902c-0.592-0.201-1.019-0.761-1.019-1.421 0-0.828 0.672-1.5 1.5-1.5zM1.721 8c0.598-0.946 1.395-1.749 2.335-2.348 0.061-0.039 0.123-0.077 0.185-0.114-0.156 0.427-0.241 0.888-0.241 1.369 0 0.858 0.27 1.652 0.73 2.303l-0.952 0.952c-0.819-0.576-1.519-1.311-2.057-2.162z"></path>
+                    <path d="M12 6.906c0-0.424-0.066-0.833-0.189-1.217l-5.028 5.028c0.384 0.123 0.793 0.189 1.217 0.189 2.209 0 4-1.791 4-4z"></path>
+                    <path d="M12.969 4.531l-1.084 1.084c0.020 0.012 0.040 0.024 0.059 0.037 0.94 0.6 1.737 1.403 2.335 2.348-0.598 0.946-1.395 1.749-2.335 2.348-1.181 0.753-2.545 1.152-3.944 1.152-0.604 0-1.202-0.074-1.781-0.219l-1.201 1.201c0.933 0.335 1.937 0.518 2.982 0.518 3.489 0 6.514-2.032 8-5-0.703-1.405-1.752-2.6-3.031-3.469z"></path>
+                  </svg>
+                </span>
+              ) : (
+                <span
+                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  onClick={() => handleblock(user?.telegram_id)}
+                >
+                  <EyeIcon />
+                </span>
+              )}
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
               <span

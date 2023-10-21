@@ -42,14 +42,16 @@ export default function Header({ admin }) {
 
       <NavbarContent className="sm:hidden pr-3" justify="">
         <NavbarBrand>
-          {/* <AcmeLogo /> */}
-          <p className="font-bold text-inherit">ACME</p>
+          <p className="font-bold text-lg text-inherit">
+            <em>W/F</em>
+          </p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarBrand className="hidden sm:flex gap-4">
-        {/* <AcmeLogo /> */}
-        <p className="font-bold text-inherit">ACME</p>
+        <p className="font-bold text-xl text-inherit">
+          <em>W/F</em>
+        </p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>

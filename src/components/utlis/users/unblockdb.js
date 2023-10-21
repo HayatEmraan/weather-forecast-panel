@@ -1,11 +1,11 @@
 "use server";
 
-export async function deleteuserdb(id) {
+export async function unblockdb(id) {
   try {
     const fetchapi = await fetch(
-      `https://api.emraan.me/api/v1/delete/user?id=${id}`,
+      `https://api.emraan.me/api/v1/unblock/user?id=${id}`,
       {
-        method: "DELETE",
+        method: "PATCH",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",

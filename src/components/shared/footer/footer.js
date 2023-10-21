@@ -10,11 +10,9 @@ const Footer = () => {
             <div className="w-full px-4 sm:w-2/3 lg:w-3/12">
               <div className="mb-10 w-full">
                 <a href="/" className="mb-6 inline-block max-w-[160px]">
-                  <img
-                    src="https://cdn.tailgrids.com/2.0/image/assets/images/logo/logo.svg"
-                    alt="logo"
-                    className="max-w-full"
-                  />
+                  <p className="font-bold text-xl text-inherit">
+                    <em>W/F</em>
+                  </p>
                 </a>
                 <p className="text-body-color mb-7 text-base">
                   Weather Forecast is a free and open source weather
