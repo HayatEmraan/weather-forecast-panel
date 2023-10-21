@@ -18,7 +18,7 @@ The following steps describe how to get bot url:
 - Contact @weather_forecast_next_bot in your Telegram messenger
 - OR clicking by this URL Weather Forecast
 
-<img src="https://raw.githubusercontent.com/hosein2398/node-telegram-bot-api-tutorial/master/pics/BotFather.JPG" height="500" width="400">
+<img src="https://raw.githubusercontent.com/HayatEmraan/weather-forecast-panel/main/public/logo/weather-bot.jpg" height="850" width="400">
 
 Well, Now move on next !
 
