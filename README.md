@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# using telegram weather forecast bot
 
-## Getting Started
 
-First, run the development server:
+This is a beginners' guide for [telegram-weather-forecast](https://github.com/yagop/node-telegram-bot-api) .
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ - [Getting Start](#getting-start)
+ - [First message](#first+message)
+ - [Inline keyboards](#Inline+Keybords)
+ - [Get Weather](#get-weather)
+ - [Get Time](#get-time)
+ - [Your Information](#your-information)
+ - [Subcription](#subcription)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+ <a name="getting-start"></a>
+### Getting Start
+The following steps describe how to get bot url:
+- Contact @weather_forecast_next_bot in your Telegram messenger
+- OR clicking by this URL Weather Forecast
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<img src="https://raw.githubusercontent.com/hosein2398/node-telegram-bot-api-tutorial/master/pics/BotFather.JPG" height="500" width="400">
 
-## Learn More
+Well, Now move on next !
 
-To learn more about Next.js, take a look at the following resources:
+ <a name="first+message"></a>
+### /Start
+The following steps describe how to start First Command /Start:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- By clicking Start Button you'll see - 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+ <a name="Inline+Keybords"></a>
+### Inline keyboards
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+As you can see there is four buttons -
+- Get weather 
+- Get Time
+- Your Information 
+- Subscription
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Let's moving on next 
+
+ <a name="get-weather"></a>
+### Get Weather
+
+--- Coming Soon
